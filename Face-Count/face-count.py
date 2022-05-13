@@ -127,7 +127,7 @@ def evaluate(weight_file_path, data_dir, output_dir, prob_thresh=0.5, nms_thresh
 
       # process input at different scales
       for s in scales:
-        print("Processing {} at scale {:.4f}".format(fname, s))
+        #print("Processing {} at scale {:.4f}".format(fname, s))
         img = cv2.resize(raw_img_f, (0, 0), fx=s, fy=s, interpolation=cv2.INTER_LINEAR)
         img = img - average_image
         img = img[np.newaxis, :]
@@ -179,7 +179,7 @@ def evaluate(weight_file_path, data_dir, output_dir, prob_thresh=0.5, nms_thresh
         bboxes = np.vstack((bboxes, tmp_bboxes)) # <class 'tuple'>: (5265, 5)
 
 
-      print("time {:.2f} secs for {}".format(time.time() - start, fname))
+      #print("time {:.2f} secs for {}".format(time.time() - start, fname))
 
       # non maximum suppression
       # refind_idx = util.nms(bboxes, nms_thresh)
@@ -188,17 +188,17 @@ def evaluate(weight_file_path, data_dir, output_dir, prob_thresh=0.5, nms_thresh
                                                    max_output_size=bboxes.shape[0], iou_threshold=nms_thresh)
       refind_idx = sess.run(refind_idx)
       refined_bboxes = bboxes[refind_idx]
-      print("\n\n",len(refined_bboxes),"\n\n")
-      overlay_bounding_boxes(raw_img, refined_bboxes, lw)
+      print("\n\nNo. of faces in {} : {}\n\n".format(fname,len(refined_bboxes)))
+      #overlay_bounding_boxes(raw_img, refined_bboxes, lw)
 
-      if display:
-        # plt.axis('off')
-        plt.imshow(raw_img)
-        plt.show()
+      # if display:
+      #   # plt.axis('off')
+      #   plt.imshow(raw_img)
+      #   plt.show()
 
       # save image with bounding boxes
-      raw_img = cv2.cvtColor(raw_img, cv2.COLOR_RGB2BGR)
-      cv2.imwrite(os.path.join(output_dir, fname), raw_img)
+      #raw_img = cv2.cvtColor(raw_img, cv2.COLOR_RGB2BGR)
+      #cv2.imwrite(os.path.join(output_dir, fname), raw_img)
 
 def main():
 
