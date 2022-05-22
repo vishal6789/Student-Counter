@@ -12,7 +12,7 @@ import cv2
 import scipy.io
 import numpy as np
 import matplotlib.pyplot as plt
-import cv2
+
 import pickle
 
 import pylab as pl
@@ -188,7 +188,9 @@ def evaluate(weight_file_path, data_dir, output_dir, prob_thresh=0.5, nms_thresh
                                                    max_output_size=bboxes.shape[0], iou_threshold=nms_thresh)
       refind_idx = sess.run(refind_idx)
       refined_bboxes = bboxes[refind_idx]
-      print("\n\nNo. of faces in {} : {}\n\n".format(fname,len(refined_bboxes)))
+      ClassName = fname.split('.')
+      ClassName = ClassName[0]
+      print("\n\nNo. of Student in {} : {}\n\n".format(ClassName,len(refined_bboxes)))
       #overlay_bounding_boxes(raw_img, refined_bboxes, lw)
 
       # if display:
@@ -202,28 +204,12 @@ def evaluate(weight_file_path, data_dir, output_dir, prob_thresh=0.5, nms_thresh
 
 def main():
 
-  argparse = ArgumentParser()
-  argparse.add_argument('--weight_file_path', type=str, help='Pretrained weight file.', default="/path/to/mat2tf.pkl")
-  argparse.add_argument('--data_dir', type=str, help='Image data directory.', default="/path/to/input_image_directory")
-  argparse.add_argument('--output_dir', type=str, help='Output directory for images with faces detected.', default="/path/to/output_directory")
-  argparse.add_argument('--prob_thresh', type=float, help='The threshold of detection confidence(default: 0.5).', default=0.5)
-  argparse.add_argument('--nms_thresh', type=float, help='The overlap threshold of non maximum suppression(default: 0.1).', default=0.1)
-  argparse.add_argument('--line_width', type=int, help='Line width of bounding boxes(0: auto).', default=3)
-  argparse.add_argument('--display', type=bool, help='Display each image on window.', default=False)
-
-  args = argparse.parse_args()
-
-  # check arguments
-  assert os.path.exists(args.weight_file_path), "weight file: " + args.weight_file_path + " not found."
-  assert os.path.exists(args.data_dir), "data directory: " + args.data_dir + " not found."
-  assert os.path.exists(args.output_dir), "output directory: " + args.output_dir + " not found."
-  assert args.line_width >= 0, "line_width should be >= 0."
+  weight_file_path = 'resnetFinal.pickle'
+  data_dir = 'input'
+  output_dir = 'output'
 
   with tf.Graph().as_default():
-    evaluate(
-      weight_file_path=args.weight_file_path, data_dir=args.data_dir, output_dir=args.output_dir,
-      prob_thresh=args.prob_thresh, nms_thresh=args.nms_thresh,
-      lw=args.line_width, display=args.display)
+    evaluate(weight_file_path, data_dir, output_dir)
 
 if __name__ == '__main__':
   main()
