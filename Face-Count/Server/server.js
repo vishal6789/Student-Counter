@@ -3,7 +3,8 @@ const filUpload = require('express-fileupload')
 const cors = require('cors')
 const app = express()
 const fs = require('fs')
-const PORT = process.env.PORT || 3000
+const { exec } = require('child_process')
+const PORT = process.env.PORT || 3001
 
 //middleware
 app.use(cors())
@@ -16,13 +17,18 @@ app.get('/', (req, res) => {
 })
 
 app.post('/processimage', (req, res) => {
-    const image = req.files.media
+    const image = req.files.classimage
     console.log(image)
     fs.writeFileSync(`../input/${image.name}`, image.data, function (err) {
         if (err) {
             return console.log(err);
         }
     });
+    console.log("Processning")
+    exec('cd .. ; python3 face-count.py',(err,stdout)=>{
+        console.log("Processing done")
+        console.log(stdout)
+    })
     res.status(201).send("Image updated successfully")
 })
 
