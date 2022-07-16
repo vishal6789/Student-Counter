@@ -32,5 +32,11 @@ app.post('/processimage', (req, res) => {
     res.status(201).send("Image updated successfully")
 })
 
+app.get('/studentcount',(req,res)=>{
+    const stringdata = fs.readFileSync("../count.json");
+    const parsedData = JSON.parse(stringdata);
+    res.json(parsedData);
+})
+
 //listener
 app.listen(PORT, () => console.log(`Server running at ${PORT}`))
