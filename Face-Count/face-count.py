@@ -14,6 +14,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 import pickle
+import json
 
 import pylab as pl
 import time
@@ -23,6 +24,10 @@ from scipy.special import expit
 import glob
 
 MAX_INPUT_DIM = 5000.0
+
+StudentInClass = {}
+with open("count.json","r") as countFile:
+    StudentInClass = json.load(countFile)
 
 def overlay_bounding_boxes(raw_img, refined_bboxes, lw):
   """Overlay bounding boxes of face on images.
@@ -191,6 +196,9 @@ def evaluate(weight_file_path, data_dir, output_dir, prob_thresh=0.5, nms_thresh
       ClassName = fname.split('.')
       ClassName = ClassName[0]
       print("\n\nNo. of Student in {} : {}\n\n".format(ClassName,len(refined_bboxes)))
+
+      StudentInClass[ClassName] = len(refined_bboxes)
+
       #overlay_bounding_boxes(raw_img, refined_bboxes, lw)
 
       # if display:
@@ -210,6 +218,11 @@ def main():
 
   with tf.Graph().as_default():
     evaluate(weight_file_path, data_dir, output_dir)
+
+  #creating JSON File
+  with open("count.json","w") as jsonFile:
+    json.dump(StudentInClass,jsonFile)
+
 
 if __name__ == '__main__':
   main()
