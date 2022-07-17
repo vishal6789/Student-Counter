@@ -199,6 +199,8 @@ def evaluate(weight_file_path, data_dir, output_dir, prob_thresh=0.5, nms_thresh
 
       StudentInClass[ClassName] = len(refined_bboxes)
 
+      os.remove("input/"+fname)
+
       #overlay_bounding_boxes(raw_img, refined_bboxes, lw)
 
       # if display:
