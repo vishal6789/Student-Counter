@@ -23,21 +23,36 @@
                         pos_hint: {"x":0.02, "y":0.02}  
                         size_hint : (0.47,0.47) 
                         text: "[sup][size=100]SF-1 [/size][/sup][size=300]28[/size]" 
+                        on_press: root.manager.current = 'Analysis'
                 
                 Button:
                         id: c4
                         pos_hint: {"x":0.51, "y":0.02}  
                         size_hint : (0.47,0.47) 
                         text: "[sup][size=100]SF-1 [/size][/sup][size=300]28[/size]"
+                        on_press: root.manager.current = 'Analysis'
 
                 Button:
                         id: c1
                         pos_hint: {"x":0.02, "y":0.51}  
                         size_hint : (0.47,0.47) 
                         text: "[sup][size=100]SF-1 [/size][/sup][size=300]28[/size]"
+                        on_press: root.manager.current = 'Analysis'
 
                 Button:
                         id: c2
                         pos_hint: {"x":0.51, "y":0.51}  
                         size_hint : (0.47,0.47) 
                         text: "[sup][size=100]SF-1 [/size][/sup][size=300]28[/size]"
+                        on_press: root.manager.current = 'Analysis'
+
+<AnalysisScreen>:
+        FloatLayout:
+                id: imgLay
+                size: self.parent.size
+
+                canvas:
+                        Rectangle:
+                                pos : self.pos
+                                source : 'da1.png'
+                                size : self.size

@@ -7,6 +7,7 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.button import Button
 from kivy.uix.label import Label
 from kivy.properties import ObjectProperty
+from kivy.uix.screenmanager import ScreenManager, Screen
 import requests
 import json
 
@@ -18,11 +19,11 @@ from kivy.config import Config
 Config.set('graphics', 'width', '1366')
 Config.set('graphics', 'height', '768')
 
-class MainWindow(Widget):
+class MainWindow(Screen):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        print("Start")    
+        print("MainScreen")    
         self.fetch()
         
     
@@ -52,13 +53,28 @@ class MainWindow(Widget):
     
     pass
 
+class AnalysisScreen(Screen):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        print("Analysis Screen")   
+
+    def on_touch_down(self, touch):
+        print(touch)
+        self.manager.current = 'Main'
+         
+    
+
 
 class myApp(App):
     
     #Setting application Tittle 
     App.title = "Student Counter"
+    
     def build(self):
-        return MainWindow()
+        sm = ScreenManager()
+        sm.add_widget(MainWindow(name='Main'))
+        sm.add_widget(AnalysisScreen(name='Analysis'))
+        return sm
 
 if __name__ == "__main__":
     myApp().run()       
