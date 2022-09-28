@@ -31,9 +31,9 @@ class MainWindow(Screen):
     DispCounts = []
     
     def fetch(self):
-        url = "http://localhost:3001/studentcount"
-        r = requests.get(url)
-        self.studentCount = r.json()
+        #url = "http://localhost:3001/studentcount"
+        #r = requests.get(url)
+        self.studentCount = {"SF-1": 1, "SF-2": 53, "SF-3": 41, "SF-4":27}
         self.generateList()
         
     def generateList(self):
