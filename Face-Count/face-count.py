@@ -205,7 +205,7 @@ def evaluate(weight_file_path, data_dir, output_dir, prob_thresh=0.5, nms_thresh
             refined_bboxes = bboxes[refind_idx]
             ClassName = fname.split('.')
             ClassName = ClassName[0]
-            print("{}".format(len(refined_bboxes)))
+            print("{}@{} ".format(ClassName, len(refined_bboxes)), end="")
 
             StudentInClass[ClassName] = len(refined_bboxes)
 

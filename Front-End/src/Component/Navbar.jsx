@@ -1,7 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import Logo from "../Image/Logo.jpg";
 import "../Component/Card.css";
-const Navbar = () => {
+import axios from "axios";
+const Navbar = ({ updateCount }) => {
+  const [load, setLoad] = useState(false)
+  const fetchallclasscount = async () => {
+    setLoad(true)
+    await axios.get("http://192.168.29.59:3001/getCounts/all").then((response) => {
+      setLoad(false)
+      updateCount(response.data)
+    })
+  }
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>
       <div
@@ -12,6 +21,10 @@ const Navbar = () => {
           alignItems: "center",
         }}
       >
+        {load &&
+          <div style={{ top: "0px", display: "flex", alignItems: "center", justifyContent: "center", position: "absolute", width: "100%", height: "100vh", backgroundColor: "#808080a8" }}>
+            <p style={{ fontSize: "3rem" }}>Processing...</p>
+          </div>}
         <img
           className="Logo"
           style={{ width: "16%", height: "16%" }}
@@ -24,7 +37,7 @@ const Navbar = () => {
           Technology
         </p>
       </div>
-      <button className="button" style={{}}>
+      <button className="button" onClick={fetchallclasscount} style={{}}>
         Refresh All
       </button>
     </div>

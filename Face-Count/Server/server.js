@@ -40,7 +40,7 @@ app.get('/getCount/:class', async (req, res) => {
     });
 })
 
-app.get('/getCount/all', async (req, res) => {
+app.get('/getCounts/all', async (req, res) => {
     captureImage(0);
     await processImage(res, 0).then((count) => {
     }).catch(() => {
@@ -65,7 +65,16 @@ app.listen(PORT, () => console.log(`Server running at ${PORT}`))
 
 const captureImage = (clas) => {
     if (clas === 0) {
-        // capture image for every class
+        const classes = [1, 2, 3, 4]
+        let i = 0
+        const timer = setInterval(() => {
+            if (i === 4) clearInterval(timer)
+            else
+                exec(`python3 SendImage.py ${classes[i]}`, (err, stdout) => {
+                    console.log("Image captured successfully 👍")
+                })
+            i++;
+        }, 800);
     }
     else
         exec(`python3 SendImage.py ${clas}`, (err, stdout) => {
@@ -74,12 +83,27 @@ const captureImage = (clas) => {
 }
 
 const processImage = async (res, clas) => {
-    exec('cd .. ; python3 face-count.py', (err, stdout) => {
-        console.log("Processing done")
-        saveCount(clas, stdout)
-        console.log(stdout)
-        res.status(200).json({ class: clas, count: stdout })
-    })
+    if (clas === 0) {
+        exec('cd .. ; python3 face-count.py', (err, stdout) => {
+            console.log("Processing done")
+            const class_count_arr = stdout.split(" ")
+            const final_arr = class_count_arr.map((data) => {
+                const [classname, count] = data.split("@")
+                // saveCount(classname, count)
+                return { class: classname.split("-")[1], count: count }
+            })
+            console.log(final_arr)
+            res.status(200).json(final_arr)
+        })
+    }
+    else
+        exec('cd .. ; python3 face-count.py', (err, stdout) => {
+            console.log("Processing done")
+            const [classname, count] = stdout.split("@")
+            saveCount(classname.split("-")[1], count)
+            console.log(classname.split("-")[1], count)
+            res.status(200).json({ class: classname.split("-")[1], count: count })
+        })
 }
 
 const saveCount = async (classname, count) => {
