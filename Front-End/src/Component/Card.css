@@ -1,0 +1,106 @@
+.Card{
+    display: flex;
+    flex-direction: column;
+    border: 2px solid black;
+    height: 35%;
+    width: 40%;
+    justify-content: center;
+    align-items: center;
+    margin: 12px;
+    background-color: azure;
+    border-radius: 12px;
+    padding: 12px;
+}
+.ClassName{
+font-size: 50px;
+display: inline;
+
+}
+.btn{
+    display: flex;
+}
+
+.Count{
+    font-size: 40px;
+    margin-top: 12px;
+
+}
+
+.button{
+    font-size: 20px;
+    border-radius: 12px;
+    border: none;
+    background-color: black;
+    color: white;
+    padding: 7px;
+    margin: 7px;
+    cursor: pointer;
+}
+
+.button:hover{
+    background-color: rgb(80, 79, 79);
+}
+.CollegeName{
+    font-size:30px; 
+}
+.Logo{
+   
+}
+@media only screen and (max-width:763px) {
+    .CollegeName{
+        font-size: 23px;
+    }
+   
+    .ClassName{
+        font-size: 30px;
+    }
+    .Count{
+        font-size: 20px;
+    }
+    .button{
+        font-size: 12px;
+    }
+}
+
+@media only screen and (max-width:544px) {
+    .CollegeName{
+        display: none;
+    }
+    .Card{
+width: 100%;
+        
+
+    }
+   
+   
+
+    .ClassName{
+        font-size: 60px;
+    }
+    .Count{
+        font-size: 50px;
+    }
+    .button{
+        font-size: 20px;
+    }
+
+}
+   
+@media only screen and (max-width: 288px) {
+
+    .ClassName{
+        font-size: 40px;
+    }
+    .Count{
+        font-size: 30px;
+    }
+    .button{
+        font-size: 15px;
+    }
+
+}
+
+.link{
+    text-decoration: none;
+    color: white;
+}
